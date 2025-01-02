@@ -1,57 +1,42 @@
 // Select elements using querySelector
-const generateButton = document.querySelector("#generate-btn");
-const copyButton = document.querySelector("#copy-btn");
-const passwordLengthInput = document.querySelector("#password-length");
-const includeUppercaseCheckbox = document.querySelector("#include-uppercase");
-const includeNumbersCheckbox = document.querySelector("#include-numbers");
-const includeSpecialCheckbox = document.querySelector("#include-special");
-const generatedPasswordField = document.querySelector("#generated-password");
+const [
+  generateButton,
+  copyButton,
+  passwordLengthInput,
+  includeUppercaseCheckbox,
+  includeNumbersCheckbox,
+  includeSpecialCheckbox,
+  generatedPasswordField,
+] = [
+  "#generate-btn",
+  "#copy-btn",
+  "#password-length",
+  "#include-uppercase",
+  "#include-numbers",
+  "#include-special",
+  "#generated-password",
+].map((selector) => document.querySelector(selector));
 
 // Add event listener to generate button
-generateButton.addEventListener("click", function () {
+generateButton.addEventListener("click", () => {
   const length = parseInt(passwordLengthInput.value);
-  const includeUppercase = includeUppercaseCheckbox.checked;
-  const includeNumbers = includeNumbersCheckbox.checked;
-  const includeSpecial = includeSpecialCheckbox.checked;
+  const charset = [
+    "abcdefghijklmnopqrstuvwxyz",
+    includeUppercaseCheckbox.checked && "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    includeNumbersCheckbox.checked && "0123456789",
+    includeSpecialCheckbox.checked && "!@#$%^&*()_+[]{}|;:,.<>?",
+  ]
+    .filter(Boolean)
+    .join("");
 
-  const password = generatePassword(
-    length,
-    includeUppercase,
-    includeNumbers,
-    includeSpecial
-  );
-  generatedPasswordField.value = password;
+  generatedPasswordField.value = [...Array(length)]
+    .map(() => charset[Math.floor(Math.random() * charset.length)])
+    .join("");
 });
 
 // Add event listener to copy button
-copyButton.addEventListener("click", function () {
+copyButton.addEventListener("click", () => {
   generatedPasswordField.select();
   document.execCommand("copy");
   alert("Slaptažodis nukopijuotas!");
 });
-
-// Password generation function
-function generatePassword(
-  length,
-  includeUppercase,
-  includeNumbers,
-  includeSpecial
-) {
-  const lowercase = "abcdefghijklmnopqrstuvwxyz";
-  const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const numbers = "0123456789";
-  const specialChars = "!@#$%^&*()_+[]{}|;:,.<>?";
-
-  let charset = lowercase;
-  if (includeUppercase) charset += uppercase;
-  if (includeNumbers) charset += numbers;
-  if (includeSpecial) charset += specialChars;
-
-  let password = "";
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * charset.length);
-    password += charset[randomIndex];
-  }
-
-  return password;
-}
