@@ -1,9 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="lt">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Slaptažodžių Generatorius</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body></body>
+  <body>
+    <div class="container">
+      <h2>Slaptažodžių Generatorius</h2>
+
+      <label for="password-length">Pasirinkite slaptažodžio ilgį (5-30):</label>
+      <input type="number" id="password-length" min="5" max="30" value="12" />
+
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" id="include-uppercase" /> Didžiosios raidės
+        </label>
+        <label> <input type="checkbox" id="include-numbers" /> Skaičiai </label>
+        <label>
+          <input type="checkbox" id="include-special" /> Simboliai
+        </label>
+      </div>
+
+      <button id="generate-btn">Sugeneruoti slaptažodį</button>
+
+      <input
+        type="text"
+        id="generated-password"
+        readonly
+        placeholder="Sugeneruotas slaptažodis"
+      />
+
+      <button id="copy-btn">Kopijuoti</button>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
 </html>
