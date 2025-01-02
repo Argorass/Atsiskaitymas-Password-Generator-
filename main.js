@@ -1,8 +1,18 @@
-document.getElementById("generate-btn").addEventListener("click", function () {
-  const length = parseInt(document.getElementById("password-length").value);
-  const includeUppercase = document.getElementById("include-uppercase").checked;
-  const includeNumbers = document.getElementById("include-numbers").checked;
-  const includeSpecial = document.getElementById("include-special").checked;
+// Select elements using querySelector
+const generateButton = document.querySelector("#generate-btn");
+const copyButton = document.querySelector("#copy-btn");
+const passwordLengthInput = document.querySelector("#password-length");
+const includeUppercaseCheckbox = document.querySelector("#include-uppercase");
+const includeNumbersCheckbox = document.querySelector("#include-numbers");
+const includeSpecialCheckbox = document.querySelector("#include-special");
+const generatedPasswordField = document.querySelector("#generated-password");
+
+// Add event listener to generate button
+generateButton.addEventListener("click", function () {
+  const length = parseInt(passwordLengthInput.value);
+  const includeUppercase = includeUppercaseCheckbox.checked;
+  const includeNumbers = includeNumbersCheckbox.checked;
+  const includeSpecial = includeSpecialCheckbox.checked;
 
   const password = generatePassword(
     length,
@@ -10,16 +20,17 @@ document.getElementById("generate-btn").addEventListener("click", function () {
     includeNumbers,
     includeSpecial
   );
-  document.getElementById("generated-password").value = password;
+  generatedPasswordField.value = password;
 });
 
-document.getElementById("copy-btn").addEventListener("click", function () {
-  const passwordField = document.getElementById("generated-password");
-  passwordField.select();
+// Add event listener to copy button
+copyButton.addEventListener("click", function () {
+  generatedPasswordField.select();
   document.execCommand("copy");
   alert("Slaptažodis nukopijuotas!");
 });
 
+// Password generation function
 function generatePassword(
   length,
   includeUppercase,
